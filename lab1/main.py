@@ -43,8 +43,10 @@ def parseDataFrame(df):
 
 
 if __name__ == '__main__':
+    pd.set_option('display.max_columns', None)
+    pd.set_option('display.width', 1000)
     df = pd.read_csv("DATABASE.csv", sep=";")
     df = parseDataFrame(df)
     df.set_index('day/month', inplace=True)
-
+    print(df)
     graphics.selectAndShowGraphics(df)
