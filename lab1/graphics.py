@@ -31,9 +31,11 @@ def selectAndShowGraphics(df):
                 plt.ylabel('Value')
 
             if graphic_type == 'pie':
-                df[columns[0]].value_counts().plot.pie(subplots=True)
+                df[columns[0]].value_counts().plot.pie(subplots=True, autopct='%1.1f%%')
                 plt.ylabel('')
                 plt.xlabel('')
+
+            plt.title(columns[0] + " " + graphic_type)
         else:
             if graphic_type == 'line':
                 df.plot.line(x=columns[0], y=columns[1])
@@ -48,6 +50,7 @@ def selectAndShowGraphics(df):
                 tDf.plot.kde()
             plt.xlabel(columns[0])
             plt.ylabel(columns[1])
+            plt.title(columns[0] + "-" + columns[1] + " " + graphic_type)
 
     plt.xticks(rotation=90)
     plt.show()

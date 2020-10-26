@@ -3,20 +3,17 @@ import re
 import graphics
 
 
-def convert12to24(str1):
-    str1 = '0' + str1 if str1[1] == ':' else str1
+def convertTime(data):
+    data = '0' + data if data[1] == ':' else data
 
-    if str1[-2:] == "AM" and str1[:2] == "12":
-        return "00" + str1[2:-2]
-
-    elif str1[-2:] == "AM":
-        return str1[:-2]
-
-    elif str1[-2:] == "PM" and str1[:2] == "12":
-        return str1[:-2]
-
+    if data[-2:] == "AM" and data[:2] == "12":
+        return "00" + data[2:-2]
+    elif data[-2:] == "AM":
+        return data[:-2]
+    elif data[-2:] == "PM" and data[:2] == "12":
+        return data[:-2]
     else:
-        return str(int(str1[:2]) + 12) + str1[2:-2]
+        return str(int(data[:2]) + 12) + data[2:-2]
 
 
 def parseDataFrame(df):
@@ -26,7 +23,7 @@ def parseDataFrame(df):
             lambda x: (str(x) + '.2019' if bool(re.match("^\d{1,2}\.(" + shortMonthORString + ")$", str(x))) else x))
         df[column] = df[column].apply(
             lambda x: (
-                convert12to24(x) if bool(re.match("^((1[0-2]|0?[1-9]):([0-5][0-9]) ?([AaPp][Mm]))$", str(x))) else x))
+                convertTime(x) if bool(re.match("^((1[0-2]|0?[1-9]):([0-5][0-9]) ?([AaPp][Mm]))$", str(x))) else x))
         df[column] = df[column].apply(
             lambda x: (
                 int(x[:-1]) if bool(re.match("^\d{1,2}\%$", str(x))) else x))
